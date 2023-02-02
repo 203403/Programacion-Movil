@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/login.dart';
 import 'package:flutter_application_1/pages/register.dart';
-import 'package:flutter_application_1/pages/vista01.dart';
-import 'package:flutter_application_1/pages/vista02.dart';
-import 'package:flutter_application_1/pages/vista03.dart';
+import 'package:flutter_application_1/screens/body_boarding.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Register(),
+      home: const BodyBoarding(),
     );
   }
 }

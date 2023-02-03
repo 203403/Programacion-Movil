@@ -92,7 +92,7 @@ class _OnBoardingState extends State<OnBoarding> {
           listBoarding.length,
           (index) => AnimatedContainer(
             duration: kThemeAnimationDuration,
-            height: 5,
+            height: currentePage == index ? 7 : 5,
             width: currentePage == index ? 30 : 20,
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(

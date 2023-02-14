@@ -116,39 +116,35 @@ class _OnBoardingState extends State<OnBoarding> {
             width: double.infinity,
             height: 60,
             child: OutlinedButton(
-                onPressed: () {
-                  currentePage == listBoarding.length - 1
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Login(),
-                          ),
-                        )
-                      : pageController.nextPage(
-                          curve: Curves.easeInSine,
-                          duration: const Duration(milliseconds: 300));
-                },
-                style: OutlinedButton.styleFrom(
-                    backgroundColor: currentePage == listBoarding.length - 1
-                        ? Colors.green
-                        : Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    side: BorderSide(
-                        width: 3,
-                        color: currentePage == listBoarding.length - 1
-                            ? Colors.green
-                            : const Color(0xff878787))),
-                child: Text(
-                  currentePage == listBoarding.length - 1
-                      ? "Continuar"
-                      : "Siguiente",
-                  style: TextStyle(
-                      fontSize: 24,
+              onPressed: () async {
+                currentePage == listBoarding.length - 1
+                    ? Navigator.pushNamed(context, '/homepage')
+                    : pageController.nextPage(
+                        curve: Curves.easeInSine,
+                        duration: const Duration(milliseconds: 300));
+              },
+              style: OutlinedButton.styleFrom(
+                  backgroundColor: currentePage == listBoarding.length - 1
+                      ? Colors.green
+                      : Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  side: BorderSide(
+                      width: 3,
                       color: currentePage == listBoarding.length - 1
-                          ? const Color(0xffffffff)
-                          : const Color(0xff878787)),
-                )),
+                          ? Colors.green
+                          : const Color(0xff878787))),
+              child: Text(
+                currentePage == listBoarding.length - 1
+                    ? "Continuar"
+                    : "Siguiente",
+                style: TextStyle(
+                    fontSize: 24,
+                    color: currentePage == listBoarding.length - 1
+                        ? const Color(0xffffffff)
+                        : const Color(0xff878787)),
+              ),
+            ),
           ),
         ),
       ),

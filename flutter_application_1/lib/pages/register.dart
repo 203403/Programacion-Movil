@@ -102,10 +102,9 @@ class Register extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: 400,
+                                width: 330,
                                 child: RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.justify,
+                                  textAlign: TextAlign.left,
                                   text: const TextSpan(
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.black),

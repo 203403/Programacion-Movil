@@ -26,14 +26,14 @@ class WelcomeUserGoogle extends StatelessWidget {
             children: <Widget>[
               ClipOval(
                   child: Image.network(_user.photoURL!,
-                      width: 150, height: 150, fit: BoxFit.cover)),
-              const SizedBox(height: 30),
+                      width: 100, height: 100, fit: BoxFit.cover)),
+              const SizedBox(height: 20),
               const Text('Welcome,', textAlign: TextAlign.center),
               Text(_user.displayName!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 25)),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               const Text('E-mail,', textAlign: TextAlign.center),
               Text(_user.email!,
                   textAlign: TextAlign.center,
@@ -44,7 +44,8 @@ class WelcomeUserGoogle extends StatelessWidget {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   _googleSignIn.signOut();
-                  Navigator.pop(context, false);
+                  Navigator.pushReplacementNamed(context, '/splash');
+                  // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -93,14 +94,14 @@ class WelcomeUserFacebook extends StatelessWidget {
             children: <Widget>[
               ClipOval(
                   child: Image.network(_user.photoURL!,
-                      width: 150, height: 150, fit: BoxFit.cover)),
-              const SizedBox(height: 30),
+                      width: 100, height: 100, fit: BoxFit.cover)),
+              const SizedBox(height: 20),
               const Text('Welcome,', textAlign: TextAlign.center),
               Text(_user.displayName!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 25)),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               const Text('E-mail,', textAlign: TextAlign.center),
               Text(_user.email!,
                   textAlign: TextAlign.center,
@@ -111,7 +112,8 @@ class WelcomeUserFacebook extends StatelessWidget {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   FacebookAuth.instance.logOut();
-                  Navigator.pop(context, false);
+                  Navigator.pushReplacementNamed(context, '/splash');
+                  // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -160,14 +162,14 @@ class WelcomeUserEmail extends StatelessWidget {
             children: <Widget>[
               ClipOval(
                   child: Image.network(_user.photoURL!,
-                      width: 150, height: 150, fit: BoxFit.cover)),
-              const SizedBox(height: 30),
+                      width: 100, height: 100, fit: BoxFit.cover)),
+              const SizedBox(height: 20),
               const Text('Welcome,', textAlign: TextAlign.center),
               Text(_user.displayName!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 25)),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               const Text('E-mail,', textAlign: TextAlign.center),
               Text(_user.email!,
                   textAlign: TextAlign.center,
@@ -177,7 +179,8 @@ class WelcomeUserEmail extends StatelessWidget {
               OutlinedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.pop(context, false);
+                  Navigator.pushReplacementNamed(context, '/splash');
+                  // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -240,7 +243,8 @@ class WelcomeUserGuest extends StatelessWidget {
               OutlinedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.pop(context, false);
+                  Navigator.pushReplacementNamed(context, '/splash');
+                  // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -1,129 +1,99 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/widgets.dart';
+import 'package:flutter_application_1/services/auth_request.dart';
 
-class RecoveryPW2 extends StatelessWidget {
+class RecoveryPW2 extends StatefulWidget {
   const RecoveryPW2({super.key});
 
   @override
+  State<RecoveryPW2> createState() => _RecoveryPW2State();
+}
+
+class _RecoveryPW2State extends State<RecoveryPW2> {
+  final passController = TextEditingController();
+  final confirmPassController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    final dynamic args = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Color(0xffe53863)),
-        title: const Text('Recuperar contraseña'),
-        elevation: 0,
-        leadingWidth: 60,
-        titleSpacing: -10,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: SizedBox(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Recuperar contraseña"),
+            Image.asset(
+              "assets/images/mini_logo.png",
               width: 70,
-              child: Image.asset(
-                'assets/images/OutsideLogin.png',
-              ),
+              height: 70,
             ),
-          ),
-        ],
+          ],
+        ),
+        backgroundColor: const Color(0xff48197c),
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints viewportConstrains) {
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstrains.maxHeight),
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 40),
+                    padding: const EdgeInsets.only(top: 30),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(bottom: 70),
+                          padding: EdgeInsets.only(bottom: 20),
                           child: Text(
-                            "Por tu seguridad, tu contraseña debe tener una longitud "
-                            "de entre 8 y 15 caracteres, usar mayúsculas, minúsculas, "
-                            "contener por lo menos un número y un carácter especial.",
+                            "Por seguridad, tu contraseña debe contener una longitud de entre 8 y 15 caracteres,usar mayúsculas, minúsculas, contener por lo menos un número especial y un carácter especial.",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Color(0xff797979)),
-                          ),
-                        ),
-                        const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Nueva contraseña',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 20.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0xffc1c1c1)),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              hintText: 'Nueva contraseña',
-                              hintStyle: const TextStyle(
-                                color: Color(0xffc1c1c1),
-                                fontSize: 16,
-                              ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 113, 113, 113),
                             ),
                           ),
                         ),
-                        const Align(
-                          alignment: Alignment.topLeft,
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30, bottom: 5),
                           child: Text(
-                            'Confirmar nueva contraseña',
+                            "Nueva contraseña",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 20.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0xffc1c1c1)),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              hintText: 'Confirmar tú nueva contraseña',
-                              hintStyle: const TextStyle(
-                                color: Color(0xffc1c1c1),
-                                fontSize: 16,
-                              ),
+                        TextField(
+                          controller: passController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
+                            hintText: ('Nueva contraseña'),
                           ),
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 300.0, bottom: 20),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: OutlinedButton(
-                              onPressed: () async {},
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: const Color(0xff80a660),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                              ),
-                              child: const Text(
-                                "Actualizar contraseña",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30, bottom: 5),
+                          child: Text(
+                            "Confirmar nueva contraseña",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
+                        TextField(
+                          controller: confirmPassController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            hintText: ('Confirmar nueva contraseña'),
+                          ),
+                        ),
+                        update_password(context, args),
                       ],
                     ),
                   ),
@@ -131,6 +101,44 @@ class RecoveryPW2 extends StatelessWidget {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding update_password(BuildContext context, args) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 50),
+      child: SizedBox(
+        width: double.infinity,
+        height: 45,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.green,
+            shape: (RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            )),
+            side: const BorderSide(
+              width: 2,
+              color: Colors.green,
+            ),
+          ),
+          child: const Text(
+            "Actualizar contraseña",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          onPressed: () {
+            if (passController.text == confirmPassController.text) {
+              resetPassword(context, args, passController.text);
+            } else {
+              alert(context, 'Verifica los campos',
+                  'Las contraseñas no son iguales');
+            }
+          },
         ),
       ),
     );

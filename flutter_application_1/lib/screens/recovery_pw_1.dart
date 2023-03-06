@@ -1,114 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/auth_request.dart';
 
-class RecoveryPW1 extends StatelessWidget {
+class RecoveryPW1 extends StatefulWidget {
   const RecoveryPW1({super.key});
 
+  @override
+  State<RecoveryPW1> createState() => _RecoveryPW1State();
+}
+
+class _RecoveryPW1State extends State<RecoveryPW1> {
+  final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Color(0xffe53863)),
-        title: const Text('Recuperar contraseña'),
-        elevation: 0,
-        leadingWidth: 60,
-        titleSpacing: -10,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: SizedBox(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Recuperar contraseña"),
+            Image.asset(
+              "assets/images/mini_logo.png",
               width: 70,
-              child: Image.asset(
-                'assets/images/OutsideLogin.png',
-              ),
+              height: 70,
             ),
-          ),
-        ],
+          ],
+        ),
+        backgroundColor: const Color(0xff48197c),
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints viewportConstrains) {
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstrains.maxHeight),
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 40),
+                    padding: const EdgeInsets.only(top: 30),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(bottom: 50),
+                          padding: EdgeInsets.only(bottom: 20),
                           child: Text(
                             "Ingresa tu email para restablecer tu contraseña",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Color(0xff797979)),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 113, 113, 113),
+                            ),
                           ),
                         ),
-                        const Align(
-                          alignment: Alignment.topLeft,
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30, bottom: 5),
                           child: Text(
-                            'Correo electrónico',
+                            "Correo eletrónico",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 20.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0xffc1c1c1)),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              hintText: 'Dirección de correo',
-                              hintStyle: const TextStyle(
-                                color: Color(0xffc1c1c1),
-                                fontSize: 16,
-                              ),
+                        TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
+                            hintText: ('Dirección de correo'),
                           ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(15),
                           child: Text(
-                            "Ingrese su correo electrónico registrado y le enviaremos "
-                            "un correo electrónico que contiene un enlace para reestablecer su contraseña",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xffc1c1c1),
-                            ),
+                            "Ingrese su correo eletrónico registrado y le enviaremos un correo electrónico que contiene un enlace para restablecer su contraseña.",
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
                           ),
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 400.0, bottom: 20),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: OutlinedButton(
-                              onPressed: () async {
-                                Navigator.pushNamed(context, '/recovery2');
-                              },
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: const Color(0xff80a660),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                              ),
-                              child: const Text(
-                                "Enviar solicitud",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        send_request(context),
                       ],
                     ),
                   ),
@@ -116,6 +86,39 @@ class RecoveryPW1 extends StatelessWidget {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding send_request(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: SizedBox(
+        width: double.infinity,
+        height: 45,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.green,
+            shape: (RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            )),
+            side: const BorderSide(
+              width: 2,
+              color: Colors.green,
+            ),
+          ),
+          child: const Text(
+            "Enviar Solicitud",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          onPressed: () {
+            sendPasswordResetEmail(context, emailController.text);
+          },
         ),
       ),
     );

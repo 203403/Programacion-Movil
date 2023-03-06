@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const Register(),
         '/recovery1': (context) => const RecoveryPW1(),
         '/recovery2': (context) => const RecoveryPW2(),
-        '/verify_code': ((context) => const VerifyCode()),
+        '/verify_code': (context) => const VerifyCode(),
       },
     );
   }

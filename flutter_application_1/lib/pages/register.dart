@@ -1,159 +1,202 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  bool _isChecked = false;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Color(0xffe53863)),
-        title: const Text('Regístrate'),
-        elevation: 0,
-        leadingWidth: 60,
-        titleSpacing: -10,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: SizedBox(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Regístrate"),
+            Image.asset(
+              "assets/images/mini_logo.png",
               width: 70,
-              child: Image.asset(
-                'assets/images/OutsideLogin.png',
-              ),
+              height: 70,
             ),
-          ),
-        ],
+          ],
+        ),
+        backgroundColor: const Color(0xffe53863),
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints viewportConstrains) {
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstrains.maxHeight),
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 40),
+                    padding: const EdgeInsets.only(top: 30),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(bottom: 70),
+                          padding: EdgeInsets.only(bottom: 30),
                           child: Text(
                             "Crea una cuenta para empezar a usar la app",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Color(0xff797979)),
-                          ),
-                        ),
-                        labelUp("Nombre"),
-                        textFieldCustom('Nombre completo'),
-                        labelUp('Correo electrónico'),
-                        textFieldCustom('Dirección de correo'),
-                        labelUp('Contraseña'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              suffixIcon: const Icon(
-                                Icons.visibility,
-                                color: Color(0xffc1c1c1),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0xffc1c1c1)),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              hintText: 'Contraseña',
-                              hintStyle: const TextStyle(
-                                color: Color(0xffc1c1c1),
-                                fontSize: 16,
-                              ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xff797979),
                             ),
                           ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.only(bottom: 5),
                           child: Text(
-                            "La contraseña debe de contener caracteres, números"
-                            "y símbolos con un mínimo de 6 caracteres",
+                            "Nombre",
                             style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xffc1c1c1),
-                            ),
+                                fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
-                                child: SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: Radio(
-                                    value: "radio value",
-                                    groupValue: "group value",
-                                    onChanged: (value) {},
-                                  ),
+                        TextField(
+                          controller: nameController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            hintText: ('Nombre completo'),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30, bottom: 5),
+                          child: Text(
+                            "Correo eletrónico",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            hintText: ('Dirección de correo'),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30, bottom: 5),
+                          child: Text(
+                            "Contraseña",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        TextField(
+                          controller: passController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            hintText: ('Contraseña'),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            "La contraseña debe contener caracteres, números y símbolos con un mínimo de 6 caracteres.",
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: _isChecked,
+                              shape: const CircleBorder(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _isChecked = value!;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.70,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Al registrarme, acepto los ",
+                                  style: DefaultTextStyle.of(context).style,
+                                  children: const <TextSpan>[
+                                    TextSpan(
+                                        text: "términos y condiciones",
+                                        style: TextStyle(color: Color(0xffc1c1c1))),
+                                    TextSpan(
+                                        text: " y la "),
+                                    TextSpan(
+                                        text: "política de privacidad.",
+                                        style: TextStyle(color: Color(0xffee84a1))),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                width: 330,
-                                child: RichText(
-                                  textAlign: TextAlign.left,
-                                  text: const TextSpan(
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                      children: [
-                                        TextSpan(
-                                            text:
-                                                "Al registrarme, acepto los "),
-                                        TextSpan(
-                                            text: "términos y condiciones ",
-                                            style: TextStyle(
-                                                color: Color(0xffee84a1))),
-                                        TextSpan(text: "y la "),
-                                        TextSpan(
-                                            text: "política de privacidad",
-                                            style: TextStyle(
-                                                color: Color(0xffee84a1))),
-                                      ]),
-                                ),
-                              )
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 100.0, bottom: 10),
+                          padding: const EdgeInsets.only(top: 30),
                           child: SizedBox(
                             width: double.infinity,
-                            height: 50,
+                            height: 45,
                             child: OutlinedButton(
-                              onPressed: () async {
-                                Navigator.pushNamed(context, '/homepage');
-                              },
                               style: OutlinedButton.styleFrom(
-                                backgroundColor: const Color(0xff80a660),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
+                                backgroundColor: Colors.green,
+                                shape: (RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                )),
+                                side: const BorderSide(
+                                  width: 2,
+                                  color: Colors.green,
+                                ),
                               ),
                               child: const Text(
                                 "Crear Cuenta",
                                 style: TextStyle(
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
                                   color: Colors.white,
                                 ),
                               ),
+                              onPressed: () {
+                                registerWithPassword(context, nameController.text, emailController.text, passController.text);
+                              },
                             ),
                           ),
                         ),
-                        HomePage.loginAC(context)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Text("¿Ya tienes una cuenta?"),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/login');
+                              },
+                              child: const Text(
+                                'Iniciar Sesión',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xffe73f6a)),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -162,35 +205,6 @@ class Register extends StatelessWidget {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  Padding textFieldCustom(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, bottom: 20.0),
-      child: TextField(
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xffc1c1c1)),
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          hintText: text,
-          hintStyle: const TextStyle(
-            color: Color(0xffc1c1c1),
-            fontSize: 16,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Align labelUp(String text) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        text,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
   }

@@ -46,7 +46,7 @@ Future<void> logInWithPassword(BuildContext context, email, password) async {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => WelcomeUserWidgetEmail(user!)))
+                      builder: (context) => WelcomeUserEmail(user!)))
             });
   } on FirebaseAuthException {
     alert(context, 'Datos no válidos',

@@ -44,7 +44,7 @@ class WelcomeUserGoogle extends StatelessWidget {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   _googleSignIn.signOut();
-                  Navigator.pushReplacementNamed(context, '/splash');
+                  Navigator.pushReplacementNamed(context, '/homepage');
                   // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
@@ -112,7 +112,7 @@ class WelcomeUserFacebook extends StatelessWidget {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   FacebookAuth.instance.logOut();
-                  Navigator.pushReplacementNamed(context, '/splash');
+                  Navigator.pushReplacementNamed(context, '/homepage');
                   // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
@@ -179,7 +179,7 @@ class WelcomeUserEmail extends StatelessWidget {
               OutlinedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacementNamed(context, '/splash');
+                  Navigator.pushReplacementNamed(context, '/homepage');
                   // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(
@@ -243,7 +243,7 @@ class WelcomeUserGuest extends StatelessWidget {
               OutlinedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacementNamed(context, '/splash');
+                  Navigator.pushReplacementNamed(context, '/homepage');
                   // Navigator.pop(context, false);
                 },
                 style: TextButton.styleFrom(

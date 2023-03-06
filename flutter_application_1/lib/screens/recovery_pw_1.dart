@@ -19,7 +19,7 @@ class _RecoveryPW1State extends State<RecoveryPW1> {
           children: [
             const Text("Recuperar contraseña"),
             Image.asset(
-              "assets/images/mini_logo.png",
+              "assets/images/OutsideLogin.png",
               width: 70,
               height: 70,
             ),

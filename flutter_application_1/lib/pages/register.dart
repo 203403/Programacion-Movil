@@ -23,7 +23,7 @@ class _RegisterState extends State<Register> {
           children: [
             const Text("Regístrate"),
             Image.asset(
-              "assets/images/mini_logo.png",
+              "assets/images/OutsideLogin.png",
               width: 70,
               height: 70,
             ),

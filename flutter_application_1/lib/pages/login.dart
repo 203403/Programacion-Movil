@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
           children: [
             const Text("Iniciar Sesión"),
             Image.asset(
-              "assets/images/mini_logo.png",
+              "assets/images/OutsideLogin.png",
               width: 70,
               height: 70,
             ),
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/recover_pass');
+                                Navigator.pushNamed(context, '/recovery1');
                               },
                               child: const Text(
                                 'Recuperar contraseña',

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <string name="app_name">All4MyPet</string>
+    <string name="app_name">My first app</string>
     <string name="facebook_app_id">2456990304466185</string>
     <string name="fb_login_protocol_scheme">fb2456990304466185</string>
     <string name="facebook_client_token">6b24a7f90b63e1983ae77895c1354727</string>

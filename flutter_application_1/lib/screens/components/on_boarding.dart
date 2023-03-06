@@ -118,7 +118,7 @@ class _OnBoardingState extends State<OnBoarding> {
             child: OutlinedButton(
               onPressed: () async {
                 currentePage == listBoarding.length - 1
-                    ? Navigator.pushNamed(context, '/homepage')
+                    ? Navigator.pushReplacementNamed(context, '/homepage')
                     : pageController.nextPage(
                         curve: Curves.easeInSine,
                         duration: const Duration(milliseconds: 300));

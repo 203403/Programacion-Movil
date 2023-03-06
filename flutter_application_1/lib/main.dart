@@ -5,6 +5,7 @@ import 'package:flutter_application_1/screens/body_boarding.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/screens/recovery_pw_1.dart';
 import 'package:flutter_application_1/screens/recovery_pw_2.dart';
+import 'package:flutter_application_1/pages/verify_code.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const Login(),
         '/register': (context) => const Register(),
         '/recovery1': (context) => const RecoveryPW1(),
-        '/recovery2': (context) => const RecoveryPW2()
+        '/recovery2': (context) => const RecoveryPW2(),
+        '/verify_code': ((context) => const VerifyCode()),
       },
     );
   }

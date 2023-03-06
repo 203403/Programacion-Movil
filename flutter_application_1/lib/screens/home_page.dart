@@ -1,9 +1,53 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_application_1/screens/welcome_user.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  late FirebaseAuth _auth;
+
+  bool isUserSignedIn = false;
+  bool isUserSignedInFacebook = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    initApp();
+  }
+
+  void initApp() async {
+    FirebaseApp defaultApp = await Firebase.initializeApp();
+    _auth = FirebaseAuth.instanceFor(app: defaultApp);
+    checkIfUserIsSignedIn();
+  }
+
+  void checkIfUserIsSignedIn() async {
+    var userSignedIn = await _googleSignIn.isSignedIn();
+    AccessToken? accessToken = await FacebookAuth.instance.accessToken;
+
+    setState(() {
+      isUserSignedIn = userSignedIn;
+      if (accessToken != null) {
+        isUserSignedInFacebook = true;
+      } else {
+        isUserSignedInFacebook = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +86,6 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton.icon(
-                  label: const Text("Continuan con Google",
-                      style: TextStyle(fontSize: 22)),
                   icon: SvgPicture.asset("assets/images/google.svg",
                       color: Colors.white),
                   style: ElevatedButton.styleFrom(
@@ -52,7 +94,14 @@ class HomePage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),
                   ),
-                  onPressed: () async {},
+                  onPressed: () {
+                    onGoogleSignIn(context);
+                  },
+                  label: Text(
+                      isUserSignedIn
+                          ? 'Continuar con Google'
+                          : 'Acceder con Google',
+                      style: TextStyle(fontSize: 22)),
                 ),
               ),
             ),
@@ -62,8 +111,6 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton.icon(
-                  label: const Text("Continuan con Facebook",
-                      style: TextStyle(fontSize: 22)),
                   icon: SvgPicture.asset("assets/images/facebook.svg",
                       color: Colors.white),
                   style: ElevatedButton.styleFrom(
@@ -72,7 +119,16 @@ class HomePage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),
                   ),
-                  onPressed: () async {},
+                  onPressed: () {
+                    signInWithFacebook(context);
+                  },
+                  label: Text(
+                    isUserSignedInFacebook
+                        ? 'Continuar con Facebook'
+                        : 'Acceder con Facebook',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                 ),
               ),
             ),
@@ -152,5 +208,122 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  Future<User?> _handleSignIn() async {
+    User? user;
+    bool userSignedIn = await _googleSignIn.isSignedIn();
+
+    setState(() {
+      isUserSignedIn = userSignedIn;
+    });
+
+    if (isUserSignedIn) {
+      user = _auth.currentUser;
+    } else {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      user = (await _auth.signInWithCredential(credential)).user;
+      userSignedIn = await _googleSignIn.isSignedIn();
+      setState(() {
+        isUserSignedIn = userSignedIn;
+      });
+    }
+
+    return user;
+  }
+
+  void onGoogleSignIn(BuildContext context) async {
+    User? user = await _handleSignIn();
+    // ignore: use_build_context_synchronously
+    var userSignedIn = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => WelcomeUserGoogle(user!, _googleSignIn)),
+    );
+
+    setState(() {
+      isUserSignedIn = userSignedIn == null ? true : false;
+    });
+  }
+
+  Future<User?> _handleSignInFacebook() async {
+    User? user;
+    final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
+
+    setState(() {
+      if (accessToken != null) {
+        isUserSignedInFacebook = true;
+      } else {
+        isUserSignedInFacebook = false;
+      }
+    });
+
+    if (isUserSignedInFacebook) {
+      // final userData = await FacebookAuth.instance.getUserData();
+      final AuthCredential credential = FacebookAuthProvider.credential(
+        accessToken!.token,
+      );
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      user = userCredential.user;
+    } else {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+      if (loginResult.status == LoginStatus.success) {
+        final AccessToken accessToken = loginResult.accessToken!;
+        // final userData = await FacebookAuth.instance.getUserData();
+
+        final AuthCredential credential = FacebookAuthProvider.credential(
+          accessToken.token,
+        );
+
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+
+        user = userCredential.user;
+      }
+    }
+    return user;
+  }
+
+  void signInWithFacebook(BuildContext context) async {
+    User? user = await _handleSignInFacebook();
+    // ignore: use_build_context_synchronously
+    var userSignedIn = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => WelcomeUserFacebook(user!)),
+    );
+
+    setState(() {
+      isUserSignedInFacebook = userSignedIn == null ? true : false;
+    });
+  }
+
+  void signInAsGuest(BuildContext context) async {
+    try {
+      final userCreddential = await FirebaseAuth.instance.signInAnonymously();
+      User? user = userCreddential.user!;
+      // ignore: use_build_context_synchronously
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomeUserGuest(user)),
+      );
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          print("Unknown error.");
+      }
+    }
   }
 }

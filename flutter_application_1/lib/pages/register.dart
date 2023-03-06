@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/home_page.dart';
+import 'package:flutter_application_1/services/auth_request.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -137,48 +137,20 @@ class _RegisterState extends State<Register> {
                                   children: const <TextSpan>[
                                     TextSpan(
                                         text: "términos y condiciones",
-                                        style: TextStyle(color: Color(0xffc1c1c1))),
-                                    TextSpan(
-                                        text: " y la "),
+                                        style: TextStyle(
+                                            color: Color(0xffc1c1c1))),
+                                    TextSpan(text: " y la "),
                                     TextSpan(
                                         text: "política de privacidad.",
-                                        style: TextStyle(color: Color(0xffee84a1))),
+                                        style: TextStyle(
+                                            color: Color(0xffee84a1))),
                                   ],
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                shape: (RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                )),
-                                side: const BorderSide(
-                                  width: 2,
-                                  color: Colors.green,
-                                ),
-                              ),
-                              child: const Text(
-                                "Crear Cuenta",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onPressed: () {
-                                registerWithPassword(context, nameController.text, emailController.text, passController.text);
-                              },
-                            ),
-                          ),
-                        ),
+                        create_account(context),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -207,5 +179,42 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  Padding create_account(BuildContext context) {
+    return Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              shape: (RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              )),
+                              side: const BorderSide(
+                                width: 2,
+                                color: Colors.green,
+                              ),
+                            ),
+                            child: const Text(
+                              "Crear Cuenta",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () {
+                              registerWithPassword(
+                                  context,
+                                  nameController.text,
+                                  emailController.text,
+                                  passController.text);
+                            },
+                          ),
+                        ),
+                      );
   }
 }

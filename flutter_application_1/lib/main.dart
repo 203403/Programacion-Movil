@@ -3,8 +3,8 @@ import 'package:flutter_application_1/pages/login.dart';
 import 'package:flutter_application_1/pages/register.dart';
 import 'package:flutter_application_1/screens/body_boarding.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
-import 'package:flutter_application_1/screens/recovery_pw_1.dart';
-import 'package:flutter_application_1/screens/recovery_pw_2.dart';
+import 'package:flutter_application_1/pages/recovery_pw_1.dart';
+import 'package:flutter_application_1/pages/recovery_pw_2.dart';
 import 'package:flutter_application_1/pages/verify_code.dart';
 
 void main() {
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => const HomePage(),
         '/login': (context) => const Login(),
         '/register': (context) => const Register(),
-        '/recovery1': (context) => const RecoveryPW1(),
-        '/recovery2': (context) => const RecoveryPW2(),
+        '/recover_pass': (context) => const RecoveryPW1(),
+        '/reset_pass': (context) => const RecoveryPW2(),
         '/verify_code': (context) => const VerifyCode(),
       },
     );

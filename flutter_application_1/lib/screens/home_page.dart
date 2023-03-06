@@ -161,22 +161,32 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       flex: 3,
       child: Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 10),
         child: Column(
           children: [
-            const Text("Entrar como invitado",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Color(0xffe73964))),
-            const Padding(
-              padding: EdgeInsets.only(top: 10.0, bottom: 40),
-              child: Text(
-                "Entrar como vendedor",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Color(0xff80a660)),
+            TextButton(
+              onPressed: () {
+                signInAsGuest(context);
+              },
+              child: const Text("Entrar como invitado",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Color(0xffe73964))),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: const Text(
+                  "Entrar como vendedor",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Color(0xff80a660)),
+                ),
               ),
             ),
             loginAC(context)

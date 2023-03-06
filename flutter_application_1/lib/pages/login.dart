@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/recovery1');
+                                Navigator.pushNamed(context, '/recover_pass');
                               },
                               child: const Text(
                                 'Recuperar contraseña',
@@ -132,7 +132,10 @@ class _LoginState extends State<Login> {
                                   color: Colors.white,
                                 ),
                               ),
-                              onPressed: () {logInWithPassword(context, emailController.text, passController.text);},
+                              onPressed: () {
+                                logInWithPassword(context, emailController.text,
+                                    passController.text);
+                              },
                             ),
                           ),
                         ),

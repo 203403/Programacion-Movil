@@ -22,7 +22,7 @@ class _VerifyCodeState extends State<VerifyCode> {
           children: [
             const Text("Verificar código"),
             Image.asset(
-              "assets/images/mini_logo.png",
+              "assets/images/OutsideLogin.png",
               width: 70,
               height: 70,
             ),
